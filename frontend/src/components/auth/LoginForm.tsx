@@ -1,26 +1,33 @@
 "use client";
 
 import React, { useState } from "react";
-import { Eye, EyeOff, User, Mail, Lock, UserPlus } from "lucide-react";
-import { RegisterFormErrors, RegisterFormData } from "@/types/auth";
-import { validateRegisterForm } from "@/utils/auth";
+import { Eye, EyeOff, Mail, Lock, LogIn, Link } from "lucide-react";
+import { validateLoginForm } from "@/utils/auth";
+import { useRouter } from "next/navigation";
 import Loading from "../general/Loading";
 import { AuthService } from "@/services/auth";
-import {useRouter} from "next/navigation";
 
-export function RegisterForm() {
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+interface FormErrors {
+  email?: string;
+  password?: string;
+}
+
+export function LoginForm() {
   const router = useRouter();
-  const [formData, setFormData] = useState<RegisterFormData>({
-    username: "",
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<RegisterFormErrors>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,7 +37,7 @@ export function RegisterForm() {
     }));
 
     // Clear error for this field when user starts typing
-    if (errors[name as keyof RegisterFormErrors]) {
+    if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({
         ...prev,
         [name]: undefined,
@@ -39,30 +46,51 @@ export function RegisterForm() {
   };
 
   const handleSubmit = async () => {
-    if (!validateRegisterForm(formData, setErrors)) {
+    if (!validateLoginForm(formData, setErrors)) {
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const response = await AuthService.register(formData);
+      // TODO: Replace with actual API call to Django backend
+      const response = await AuthService.login(formData);
+
       if (response) {
+        router.push("/");
         // Reset form on success
         setFormData({
-          username: "",
           email: "",
           password: "",
-          confirmPassword: "",
         });
-        router.push('/auth/login');
+
+        // TODO: Redirect to dashboard
+        alert("Login successful!");
+      } else {
+        const errorData = await response.json();
+        console.error("Login failed:", errorData);
+
+        // Handle specific field errors from backend
+        if (errorData.errors) {
+          setErrors(errorData.errors);
+        } else if (errorData.message) {
+          alert(errorData.message);
+        } else {
+          alert("Login failed. Please check your credentials and try again.");
+        }
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("Login error:", error);
       alert("Network error. Please check your connection and try again.");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleForgotPassword = () => {
+    // TODO: Navigate to forgot password page or show modal
+    console.log("Navigate to forgot password");
+    alert("Forgot password functionality will be implemented");
   };
 
   return (
@@ -72,48 +100,18 @@ export function RegisterForm() {
           {/* Header */}
           <div className="text-center">
             <div className="mx-auto h-16 w-16 bg-indigo-100 rounded-full flex items-center justify-center">
-              <UserPlus className="h-8 w-8 text-indigo-600" />
+              <LogIn className="h-8 w-8 text-indigo-600" />
             </div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Create Account
+              Welcome Back
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Join our employee management system
+              Sign in to your employee account
             </p>
           </div>
 
           {/* Form */}
           <div className="mt-8 space-y-6">
-            {/* Username Field */}
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Username
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-3 py-3 text-black border  rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
-                    errors.username ? "border-red-300" : "border-gray-300"
-                  }`}
-                  placeholder="Enter your username"
-                />
-              </div>
-              {errors.username && (
-                <p className="mt-1 text-sm text-red-600">{errors.username}</p>
-              )}
-            </div>
-
             {/* Email Field */}
             <div>
               <label
@@ -133,7 +131,7 @@ export function RegisterForm() {
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-3 py-3 text-black border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+                  className={`block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
                     errors.email ? "border-red-300" : "border-gray-300"
                   }`}
                   placeholder="Enter your email"
@@ -160,10 +158,10 @@ export function RegisterForm() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-12 py-3 text-black border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+                  className={`block w-full pl-10 pr-12 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
                     errors.password ? "border-red-300" : "border-gray-300"
                   }`}
                   placeholder="Enter your password"
@@ -183,57 +181,36 @@ export function RegisterForm() {
               {errors.password && (
                 <p className="mt-1 text-sm text-red-600">{errors.password}</p>
               )}
-              <div className="mt-1">
-                <p className="text-xs text-gray-500">
-                  Password must contain at least 8 characters, one uppercase,
-                  one lowercase, and one number
-                </p>
-              </div>
             </div>
 
-            {/* Confirm Password Field */}
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Confirm Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
+            {/* Remember Me and Forgot Password */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
                 <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-12 py-3 text-black border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
-                    errors.confirmPassword
-                      ? "border-red-300"
-                      : "border-gray-300"
-                  }`}
-                  placeholder="Confirm your password"
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-700"
+                >
+                  Remember me
+                </label>
+              </div>
+
+              <div className="text-sm">
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onClick={handleForgotPassword}
+                  className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
                 >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                  )}
+                  Forgot password?
                 </button>
               </div>
-              {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.confirmPassword}
-                </p>
-              )}
             </div>
 
             {/* Submit Button */}
@@ -243,24 +220,22 @@ export function RegisterForm() {
                 disabled={isLoading}
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {isLoading ? (
-                  <Loading message="Creating Account..." />
-                ) : (
-                  "Create Account"
-                )}
+                {isLoading ? <Loading message="Signing In..." /> : "Sign In"}
               </button>
             </div>
 
-            {/* Login Link */}
+            {/* Register Link */}
             <div className="text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
-                  onClick={() => {}}
+                  onClick={() => {
+                    <Link href="/auth/register" />;
+                  }}
                 >
-                  Login here
+                  Sign up here
                 </button>
               </p>
             </div>
