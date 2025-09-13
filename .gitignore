@@ -1,0 +1,502 @@
+# =================================================================
+# COMPLETE .GITIGNORE FOR NEXT.JS + DJANGO PROJECT
+# Employee Management System
+# =================================================================
+
+# =================================================================
+# NEXT.JS / NODE.JS FRONTEND
+# =================================================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js build output
+.next/
+out/
+dist/
+
+# Production build
+build/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# Snowpack dependency directory
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# =================================================================
+# DJANGO / PYTHON BACKEND
+# =================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask
+instance/
+.webassets-cache
+
+# Scrapy
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Django environment variables
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Django specific
+media/
+static/
+staticfiles/
+!static/.gitkeep
+
+# Django migrations (uncomment if you want to ignore migrations)
+# */migrations/*
+# !*/migrations/__init__.py
+
+# =================================================================
+# DATABASE FILES
+# =================================================================
+
+# SQLite
+*.sqlite3
+*.db
+
+# PostgreSQL
+*.sql
+
+# MySQL
+*.mysql
+
+# =================================================================
+# OPERATING SYSTEM
+# =================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =================================================================
+# IDE / EDITOR
+# =================================================================
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# IntelliJ IDEA / PyCharm / WebStorm
+.idea/
+*.swp
+*.swo
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Atom
+.atom/
+
+# Vim
+[._]*.s[a-v][a-z]
+!*.svg
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+tags
+[._]*.un~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =================================================================
+# PROJECT SPECIFIC
+# =================================================================
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional cache directories
+.cache/
+.parcel-cache/
+
+# Temporary folders
+tmp/
+temp/
+
+# Configuration files with sensitive data
+config/local.json
+config/production.json
+secrets.json
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# Backup files
+*.backup
+*.bak
+*.orig
+*.rej
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# =================================================================
+# DEPLOYMENT
+# =================================================================
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Heroku
+.heroku/
+
+# AWS
+.aws/
+
+# Google Cloud
+.gcloud/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes
+*.kubeconfig
+
+# =================================================================
+# TESTING
+# =================================================================
+
+# Jest
+coverage/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# =================================================================
+# MISCELLANEOUS
+# =================================================================
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Archive files
+*.tar
+*.zip
+*.7z
+
+# Lock files (keep package-lock.json and yarn.lock for consistency)
+# package-lock.json
+# yarn.lock
+
+# Generated files
+generated/
+auto-generated/
+
+# Backup directories
+backup/
+backups/
+
+# Old files
+*.old
+
+# =================================================================
+# CUSTOM PROJECT FILES
+# =================================================================
+
+# Postman collections (if you don't want to commit them)
+# *.postman_collection.json
+# *.postman_environment.json
+
+# Documentation build
+docs/build/
+
+# Custom scripts
+scripts/local/
+
+# Local configuration
+local/
+.local/
+
+# API documentation generated files
+api-docs/
+
+# =================================================================
+# END OF .GITIGNORE
+# =================================================================
