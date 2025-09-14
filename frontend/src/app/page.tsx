@@ -1,5 +1,11 @@
-import HomePage from "@/components/HomePage";
+import Dashboard from "@/components/Dashboard";
+import { Metadata } from "next";
 
-export default function Home() {
-  return <HomePage />;
+export const metadata: Metadata = {
+  title: "Dashboard - Employee Management",
+  description: "Overview of employee management system",
+};
+
+export default function DashboardPage() {
+  return <Dashboard />;
 }
