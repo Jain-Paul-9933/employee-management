@@ -6,7 +6,7 @@ import { RegisterFormErrors, RegisterFormData } from "@/types/auth";
 import { validateRegisterForm } from "@/utils/auth";
 import Loading from "../general/Loading";
 import { AuthService } from "@/services/auth";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export function RegisterForm() {
           password: "",
           confirmPassword: "",
         });
-        router.push('/auth/login');
+        router.push("/auth/login");
       }
     } catch (error) {
       console.error("Registration error:", error);
@@ -258,7 +258,9 @@ export function RegisterForm() {
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
-                  onClick={() => {}}
+                  onClick={() => {
+                    router.push("/auth/login");
+                  }}
                 >
                   Login here
                 </button>

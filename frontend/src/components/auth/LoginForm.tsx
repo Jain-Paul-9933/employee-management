@@ -232,7 +232,7 @@ export function LoginForm() {
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
                   onClick={() => {
-                    <Link href="/auth/register" />;
+                    router.push("/auth/register");
                   }}
                 >
                   Sign up here
