@@ -53,7 +53,6 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      // TODO: Replace with actual API call to Django backend
       const response = await AuthService.login(formData);
 
       if (response) {
@@ -63,9 +62,6 @@ export function LoginForm() {
           email: "",
           password: "",
         });
-
-        // TODO: Redirect to dashboard
-        alert("Login successful!");
       } else {
         const errorData = await response.json();
         console.error("Login failed:", errorData);
