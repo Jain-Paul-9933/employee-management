@@ -21,8 +21,15 @@ function HomePage() {
   };
 
   const handleLogout = () => {
-    AuthService.logout();
-    router.push("/auth/login");
+    try {
+      const response = AuthService.logout();
+      if (!response) {
+        throw new Error("Server logout failed");
+      } else router.push("/auth/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      alert("Logout failed. Please try again.");
+    }
   };
 
   return (

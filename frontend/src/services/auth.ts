@@ -41,13 +41,15 @@ export const AuthService = {
   logout: async () => {
     try {
       const refreshToken = AuthService.getRefreshToken();
+      const accessToken = AuthService.getAccessToken();
 
       if (refreshToken) {
         // Call the blacklist endpoint to invalidate the refresh token
-        const response = await fetch(`${BASE_URL}/api/auth/jwt/blacklist/`, {
+        const response = await fetch(`${BASE_URL}/api/user/logout/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({ refresh: refreshToken }),
         });
@@ -56,6 +58,7 @@ export const AuthService = {
         if (!response.ok) {
           console.warn("Failed to blacklist refresh token on server");
         }
+        return response;
       }
     } catch (error) {
       console.error("Error during server logout:", error);
