@@ -1,7 +1,12 @@
-import { FormErrors, RegisterFormData } from "@/types/auth";
+import {
+  RegisterFormErrors,
+  RegisterFormData,
+  LoginFormData,
+  LoginFormErrors,
+} from "@/types/auth";
 
 // Validation functions
-const validateEmail = (email: string): boolean => {
+export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
@@ -12,11 +17,11 @@ const validatePassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
-export const validateForm = (
+export const validateRegisterForm = (
   formData: RegisterFormData,
-  setErrors: (errors: FormErrors) => void
+  setErrors: (errors: RegisterFormErrors) => void
 ): boolean => {
-  const newErrors: FormErrors = {};
+  const newErrors: RegisterFormErrors = {};
 
   // Username validation
   if (!formData.username.trim()) {
@@ -50,3 +55,27 @@ export const validateForm = (
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
 };
+
+export function validateLoginForm(
+  formData: LoginFormData,
+  setErrors: (errors: LoginFormErrors) => void
+): boolean {
+  const newErrors: LoginFormErrors = {};
+
+  // Email validation
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!validateEmail(formData.email)) {
+    newErrors.email = "Please enter a valid email address";
+  }
+
+  // Password validation
+  if (!formData.password) {
+    newErrors.password = "Password is required";
+  } else if (formData.password.length < 6) {
+    newErrors.password = "Password must be at least 6 characters";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+}
