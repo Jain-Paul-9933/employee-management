@@ -26,14 +26,6 @@ export interface FormTemplate {
   updated_at?: string;
 }
 
-export interface Employee {
-  id?: number;
-  form_template: number;
-  data: Record<string, any>;
-  created_at?: string;
-  updated_at?: string;
-}
-
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
