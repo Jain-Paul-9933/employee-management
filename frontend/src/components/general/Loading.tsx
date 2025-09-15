@@ -2,9 +2,9 @@ import React from "react";
 
 function Loading({ message }: { message?: string }) {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center gap-4 text-2xl text-gray-700">
       <svg
-        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+        className="animate-spin -ml-1 mr-3 h-10 w-10 text-blue-500"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -24,7 +24,7 @@ function Loading({ message }: { message?: string }) {
         ></path>
       </svg>
       {message ? message : "Loading..."}
-    </>
+    </div>
   );
 }
 
