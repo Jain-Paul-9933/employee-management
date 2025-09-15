@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "djoser",
     "corsheaders",
+    "drf_spectacular",
     "apps.authentication.apps.AuthenticationConfig",
     "apps.employees.apps.EmployeesConfig",
     "apps.forms.apps.FormsConfig",
@@ -153,6 +154,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 APPEND_SLASH = False
@@ -220,3 +222,54 @@ CORS_ALLOWED_ORIGINS = config(
 ).split(",")
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only in development
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Employee Management System API",
+    "DESCRIPTION": "A comprehensive API for managing employees with dynamic forms",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SCHEMA_PATH_PREFIX": "/api/",
+    "AUTHENTICATION_WHITELIST": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "SERVERS": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Development server"
+        }
+    ],
+    "TAGS": [
+        {"name": "Authentication", "description": "User authentication and management"},
+        {"name": "Form Templates", "description": "Dynamic form template management"},
+        {"name": "Employees", "description": "Employee record management"},
+    ],
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": False,
+        "defaultModelsExpandDepth": 1,
+        "defaultModelExpandDepth": 1,
+        "defaultModelRendering": "example",
+        "displayRequestDuration": True,
+        "docExpansion": "none",
+        "filter": True,
+        "operationsSorter": "alpha",
+        "showExtensions": True,
+        "showCommonExtensions": True,
+        "tryItOutEnabled": True,
+    },
+    "REDOC_UI_SETTINGS": {
+        "hideDownloadButton": False,
+        "expandResponses": "200,201",
+        "pathInMiddlePanel": True,
+        "theme": {
+            "colors": {
+                "primary": {
+                    "main": "#1976d2"
+                }
+            }
+        }
+    }
+}
