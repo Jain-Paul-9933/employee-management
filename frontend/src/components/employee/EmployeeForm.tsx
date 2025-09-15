@@ -1,4 +1,3 @@
-// components/employee/EmployeeForm.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -20,7 +19,6 @@ export default function EmployeeForm({
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize form data from initial employee data
   useEffect(() => {
     if (initialData && initialData.data) {
       setFormData(initialData.data);
@@ -33,7 +31,6 @@ export default function EmployeeForm({
       [fieldId]: value,
     }));
 
-    // Clear error when user starts typing
     if (errors[fieldId]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -49,7 +46,6 @@ export default function EmployeeForm({
       [fieldId]: true,
     }));
 
-    // Validate field on blur
     validateField(fieldId);
   };
 
@@ -60,12 +56,10 @@ export default function EmployeeForm({
     const value = formData[fieldId];
     let error = "";
 
-    // Required field validation
     if (field.is_required && (!value || value.toString().trim() === "")) {
       error = `${field.label} is required`;
     }
 
-    // Type-specific validation
     if (value && value.toString().trim() !== "") {
       switch (field.field_type) {
         case "EMAIL":
@@ -111,18 +105,15 @@ export default function EmployeeForm({
       const fieldId = field.id;
       const value = formData[fieldId];
 
-      // Required field validation
       if (field.is_required && (!value || value.toString().trim() === "")) {
         newErrors[fieldId] = `${field.label} is required`;
         return;
       }
 
-      // Skip other validations if field is empty and not required
       if (!value || value.toString().trim() === "") {
         return;
       }
 
-      // Type-specific validation
       switch (field.field_type) {
         case "EMAIL":
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -159,7 +150,6 @@ export default function EmployeeForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Mark all fields as touched
     const touchedFields: Record<string, boolean> = {};
     template.fields.forEach((field) => {
       touchedFields[field.id] = true;
@@ -175,7 +165,6 @@ export default function EmployeeForm({
     try {
       await onSubmit(formData);
     } catch (error) {
-      // Error handling is done in parent component
     } finally {
       setIsSubmitting(false);
     }
@@ -258,7 +247,6 @@ export default function EmployeeForm({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border">
-      {/* Form Header */}
       <div className="border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
@@ -272,7 +260,6 @@ export default function EmployeeForm({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Progress indicator */}
             <div className="text-sm text-gray-600">
               <span className="font-medium">
                 {completedRequiredFields}/{requiredFields.length}
@@ -295,7 +282,6 @@ export default function EmployeeForm({
         </div>
       </div>
 
-      {/* Form Content */}
       <form onSubmit={handleSubmit} className="p-6">
         <div className="space-y-6">
           {template.fields
@@ -332,7 +318,6 @@ export default function EmployeeForm({
             ))}
         </div>
 
-        {/* Form Actions */}
         <div className="mt-8 pt-6 border-t">
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
@@ -379,7 +364,6 @@ export default function EmployeeForm({
         </div>
       </form>
 
-      {/* Form Statistics */}
       <div className="border-t bg-gray-50 px-6 py-4">
         <div className="grid grid-cols-4 gap-4 text-center">
           <div>

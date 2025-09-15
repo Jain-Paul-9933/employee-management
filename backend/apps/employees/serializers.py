@@ -5,7 +5,6 @@ from apps.forms.serializers import FormFieldSerializer
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-
     form_template_name = serializers.CharField(source='form_template.name', read_only=True)
     display_name = serializers.CharField(read_only=True)
     template_fields = FormFieldSerializer(source='form_template.fields', many=True, read_only=True)
@@ -20,14 +19,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_by', 'created_at', 'updated_at']
 
     def validate_data(self, value):
-
         if not isinstance(value, dict):
             raise serializers.ValidationError("Data must be a dictionary")
-        
         return value
 
     def validate(self, attrs):
-
         form_template = attrs.get('form_template')
         data = attrs.get('data', {})
         
@@ -47,7 +43,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class EmployeeCreateSerializer(serializers.ModelSerializer):
-
     form_template_name = serializers.CharField(source='form_template.name', read_only=True)
     display_name = serializers.CharField(read_only=True)
     
@@ -60,14 +55,11 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at', 'updated_at']
 
     def validate_data(self, value):
-
         if not isinstance(value, dict):
             raise serializers.ValidationError("Data must be a dictionary")
-        
         return value
 
     def validate(self, attrs):
-
         form_template = attrs.get('form_template')
         data = attrs.get('data', {})
         
@@ -87,7 +79,6 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
 
 
 class EmployeeListSerializer(serializers.ModelSerializer):
-
     form_template_name = serializers.CharField(source='form_template.name', read_only=True)
     display_name = serializers.CharField(read_only=True)
     
@@ -100,7 +91,6 @@ class EmployeeListSerializer(serializers.ModelSerializer):
 
 
 class EmployeeUpdateSerializer(serializers.ModelSerializer):
-
     form_template_name = serializers.CharField(source='form_template.name', read_only=True)
     display_name = serializers.CharField(read_only=True)
     
@@ -113,14 +103,11 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'form_template', 'created_at', 'updated_at']
 
     def validate_data(self, value):
-
         if not isinstance(value, dict):
             raise serializers.ValidationError("Data must be a dictionary")
-        
         return value
 
     def validate(self, attrs):
-        
         form_template = attrs.get('form_template') or self.instance.form_template
         data = attrs.get('data', {})
         
