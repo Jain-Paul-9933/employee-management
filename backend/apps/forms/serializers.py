@@ -71,6 +71,9 @@ class FormTemplateSerializer(serializers.ModelSerializer):
             name__iexact=value.strip(), created_by=self.context["request"].user
         )
 
+        if self.instance:
+            queryset = queryset.exclude(id=self.instance.id)
+
         if queryset.exists():
             raise serializers.ValidationError(
                 "A form template with this name already exists."

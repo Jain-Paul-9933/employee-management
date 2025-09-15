@@ -1,4 +1,4 @@
-import Forms from "@/components/form-builder/Forms";
+import Forms from "@/components/forms/Forms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

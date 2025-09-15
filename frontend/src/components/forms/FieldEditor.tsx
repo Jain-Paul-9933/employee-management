@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { FormField } from '@/types/form';
-import { Trash2, GripVertical, Edit3, Check, X, Plus } from 'lucide-react';
+import React, { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { FormField } from "@/types/form";
+import { Trash2, GripVertical, Edit3, Check, X, Plus } from "lucide-react";
+import { renderFieldPreview } from "@/utils/form";
 
 interface FieldEditorProps {
   field: FormField;
@@ -10,7 +11,11 @@ interface FieldEditorProps {
   onRemove: () => void;
 }
 
-export default function FieldEditor({ field, onChange, onRemove }: FieldEditorProps) {
+export default function FieldEditor({
+  field,
+  onChange,
+  onRemove,
+}: FieldEditorProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedField, setEditedField] = useState<FormField>(field);
 
@@ -39,7 +44,7 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
   };
 
   const addOption = () => {
-    const newOptions = [...(editedField.options || []), ''];
+    const newOptions = [...(editedField.options || []), ""];
     setEditedField({ ...editedField, options: newOptions });
   };
 
@@ -50,44 +55,10 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
   };
 
   const removeOption = (index: number) => {
-    const newOptions = (editedField.options || []).filter((_, i) => i !== index);
+    const newOptions = (editedField.options || []).filter(
+      (_, i) => i !== index
+    );
     setEditedField({ ...editedField, options: newOptions });
-  };
-
-  const renderFieldPreview = () => {
-    const commonProps = {
-      placeholder: field.placeholder || field.label,
-      className: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-      disabled: true
-    };
-
-    switch (field.field_type) {
-      case 'TEXT':
-        return <input type="text" {...commonProps} />;
-      case 'NUMBER':
-        return <input type="number" {...commonProps} />;
-      case 'EMAIL':
-        return <input type="email" {...commonProps} />;
-      case 'PASSWORD':
-        return <input type="password" {...commonProps} />;
-      case 'DATE':
-        return <input type="date" {...commonProps} />;
-      case 'TEXTAREA':
-        return <textarea {...commonProps} rows={3} />;
-      case 'SELECT':
-        return (
-          <select {...commonProps}>
-            <option value="">Select an option</option>
-            {field.options?.map((option, index) => (
-              <option key={index} value={option}>
-                {option || `Option ${index + 1}`}
-              </option>
-            ))}
-          </select>
-        );
-      default:
-        return <input type="text" {...commonProps} />;
-    }
   };
 
   return (
@@ -95,7 +66,7 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
       ref={setNodeRef}
       style={style}
       className={`bg-white border rounded-lg p-4 shadow-sm transition-all duration-200 ${
-        isDragging ? 'shadow-lg scale-105 opacity-90' : 'hover:shadow-md'
+        isDragging ? "shadow-lg scale-105 opacity-90" : "hover:shadow-md"
       }`}
     >
       {/* Field Header */}
@@ -117,7 +88,7 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
             </span>
           )}
         </div>
-        
+
         <div className="flex items-center gap-2">
           {!isEditing && (
             <button
@@ -149,20 +120,27 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
               <input
                 type="text"
                 value={editedField.label}
-                onChange={(e) => setEditedField({ ...editedField, label: e.target.value })}
+                onChange={(e) =>
+                  setEditedField({ ...editedField, label: e.target.value })
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter field label"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Placeholder
               </label>
               <input
                 type="text"
-                value={editedField.placeholder || ''}
-                onChange={(e) => setEditedField({ ...editedField, placeholder: e.target.value })}
+                value={editedField.placeholder || ""}
+                onChange={(e) =>
+                  setEditedField({
+                    ...editedField,
+                    placeholder: e.target.value,
+                  })
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter placeholder text"
               />
@@ -174,7 +152,12 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
               <input
                 type="checkbox"
                 checked={editedField.is_required}
-                onChange={(e) => setEditedField({ ...editedField, is_required: e.target.checked })}
+                onChange={(e) =>
+                  setEditedField({
+                    ...editedField,
+                    is_required: e.target.checked,
+                  })
+                }
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <span className="text-sm text-gray-700">Required field</span>
@@ -182,7 +165,7 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
           </div>
 
           {/* Options for SELECT field */}
-          {editedField.field_type === 'SELECT' && (
+          {editedField.field_type === "SELECT" && (
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -244,7 +227,7 @@ export default function FieldEditor({ field, onChange, onRemove }: FieldEditorPr
             {field.label}
             {field.is_required && <span className="text-red-500 ml-1">*</span>}
           </label>
-          {renderFieldPreview()}
+          {renderFieldPreview(field)}
         </div>
       )}
     </div>

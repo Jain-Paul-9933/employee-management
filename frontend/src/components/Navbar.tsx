@@ -23,9 +23,9 @@ export default function Navbar() {
 
   // Mock user data - replace with actual user context
   const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    initials: "JD",
+    name: "Jain Paul",
+    email: "jain@gmail.com",
+    initials: "JP",
   };
 
   const handleLogout = async () => {

@@ -18,7 +18,7 @@ export interface FormField {
 }
 
 export interface FormTemplate {
-  id: number;
+   id?: number | string;
   name: string;
   description?: string;
   fields: FormField[];

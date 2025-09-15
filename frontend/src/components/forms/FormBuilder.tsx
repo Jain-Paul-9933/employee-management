@@ -43,6 +43,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { renderFieldPreview } from "@/utils/form";
 
 // Icon mapping for field types
 const IconMap: Record<string, IconType> = {
@@ -188,42 +189,6 @@ export default function FormBuilder({
     toast.success("Template exported!");
   };
 
-  const renderFormField = (field: FormField) => {
-    const commonProps = {
-      placeholder: field.placeholder || field.label,
-      className:
-        "w-full px-4 py-2 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-    };
-
-    switch (field.field_type) {
-      case "TEXT":
-        return <input type="text" {...commonProps} />;
-      case "NUMBER":
-        return <input type="number" {...commonProps} />;
-      case "EMAIL":
-        return <input type="email" {...commonProps} />;
-      case "PASSWORD":
-        return <input type="password" {...commonProps} />;
-      case "DATE":
-        return <input type="date" {...commonProps} />;
-      case "TEXTAREA":
-        return <textarea {...commonProps} rows={4} />;
-      case "SELECT":
-        return (
-          <select {...commonProps}>
-            <option value="">Select an option</option>
-            {field.options?.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        );
-      default:
-        return <input type="text" {...commonProps} />;
-    }
-  };
-
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Header */}
@@ -346,7 +311,7 @@ export default function FormBuilder({
                             <span className="text-red-500 ml-1">*</span>
                           )}
                         </label>
-                        {renderFormField(field)}
+                        {renderFieldPreview(field)}
                       </div>
                     ))}
 

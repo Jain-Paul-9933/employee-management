@@ -37,6 +37,24 @@ export const FormsService = {
     }
     return response.json();
   },
+  updateForm: async (id: number, data: any) => {
+    const response = await fetch(
+      `${BASE_URL}/api/forms/form-templates/${id}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(JSON.stringify(errorData) || "Failed to update form");
+    }
+    return response.json();
+  },
   deleteForm: async (id: number) => {
     const response = await fetch(
       `${BASE_URL}/api/forms/form-templates/${id}/`,

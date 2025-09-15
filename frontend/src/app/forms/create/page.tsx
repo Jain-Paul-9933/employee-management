@@ -1,4 +1,4 @@
-import CreateForm from "@/components/form-builder/CreateForm";
+import CreateForm from "@/components/forms/CreateForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
