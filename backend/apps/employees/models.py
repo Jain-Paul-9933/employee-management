@@ -4,7 +4,6 @@ from apps.authentication.models import CustomUser
 
 
 class Employee(models.Model):
-
     form_template = models.ForeignKey(
         FormTemplate, 
         on_delete=models.CASCADE, 

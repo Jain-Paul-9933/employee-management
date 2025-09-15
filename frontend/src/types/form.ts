@@ -14,7 +14,7 @@ export interface FormField {
   placeholder?: string;
   is_required: boolean;
   order: number;
-  options?: string[]; // For select fields
+  options?: string[];
 }
 
 export interface FormTemplate {

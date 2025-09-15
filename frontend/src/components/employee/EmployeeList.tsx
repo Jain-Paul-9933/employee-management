@@ -133,7 +133,6 @@ export default function EmployeeList({
     });
 
     return filtered;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employees, templates, searchQuery, selectedTemplate, sortBy, sortOrder]);
 
   const handleSelectEmployee = (employeeId: number) => {
@@ -158,12 +157,6 @@ export default function EmployeeList({
     }
   };
 
-  //   const handleBulkDelete = () => {
-  //     if (onBulkDelete && selectedEmployees.size > 0) {
-  //       onBulkDelete(Array.from(selectedEmployees));
-  //       setSelectedEmployees(new Set());
-  //     }
-  //   };
 
   const getDisplayData = (employee: Employee) => {
     const template = getTemplate(employee.form_template);
@@ -200,7 +193,6 @@ export default function EmployeeList({
   }
   return (
     <div className="bg-white rounded-lg shadow-sm border">
-      {/* Header and Filters */}
       <div className="border-b px-6 py-4">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -220,7 +212,6 @@ export default function EmployeeList({
           </div>
         </div>
 
-        {/* Search and Filters */}
         <div className="space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -353,7 +344,6 @@ export default function EmployeeList({
                           </span>
                         </div>
 
-                        {/* Display key field values */}
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm text-gray-600">
                           {Object.entries(displayData)
                             .slice(0, 4)
@@ -369,7 +359,6 @@ export default function EmployeeList({
                             ))}
                         </div>
 
-                        {/* Metadata */}
                         <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
                           <div className="flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
@@ -393,7 +382,6 @@ export default function EmployeeList({
                       </div>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => onView(employee)}

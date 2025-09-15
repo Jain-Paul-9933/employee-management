@@ -16,7 +16,6 @@ from apps.forms.models import FormTemplate
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['data', 'form_template__name']
@@ -25,13 +24,11 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_queryset(self):
-
         return Employee.objects.filter(
             created_by=self.request.user
         ).select_related('form_template', 'form_template__created_by').prefetch_related('form_template__fields')
 
     def get_serializer_class(self):
-
         if self.action == 'create':
             return EmployeeCreateSerializer
         elif self.action == 'list':
@@ -41,18 +38,15 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         return EmployeeSerializer
 
     def perform_create(self, serializer):
-
         serializer.save(created_by=self.request.user)
 
     def get_serializer_context(self):
-        
         context = super().get_serializer_context()
         context['request'] = self.request
         return context
 
     @action(detail=False, methods=['get'])
     def by_template(self, request):
-        
         template_id = request.query_params.get('template_id')
         if not template_id:
             return Response(
@@ -77,7 +71,6 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def search(self, request):
-        
         query = request.query_params.get('q', '')
         template_id = request.query_params.get('template_id')
         
@@ -97,7 +90,6 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def validate_data(self, request, pk=None):
-        
         employee = self.get_object()
         validation_errors = employee.validate_data_against_template()
         
@@ -114,7 +106,6 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['delete'])
     def bulk_delete(self, request):
-        
         employee_ids = request.data.get('employee_ids', [])
         if not employee_ids:
             return Response(
@@ -132,7 +123,6 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         })
 
     def list(self, request, *args, **kwargs):
-
         queryset = self.filter_queryset(self.get_queryset())
         
         search_query = request.query_params.get('search')

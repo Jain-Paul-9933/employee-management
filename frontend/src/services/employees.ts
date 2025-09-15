@@ -13,7 +13,6 @@ const getAuthHeaders = () => {
 };
 
 export const EmployeesService = {
-  // Get all employees
   getEmployees: async (params?: {
     search?: string;
     template_id?: number;
@@ -42,7 +41,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Get employee by ID
   getEmployeeById: async (id: number) => {
     const response = await fetch(`${BASE_URL}/api/employees/employees/${id}/`, {
       method: "GET",
@@ -57,7 +55,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Create new employee
   createEmployee: async (employeeData: {
     form_template: number;
     data: Record<string, any>;
@@ -76,7 +73,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Update employee
   updateEmployee: async (id: number, employeeData: {
     data: Record<string, any>;
   }) => {
@@ -94,7 +90,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Partial update employee
   partialUpdateEmployee: async (id: number, employeeData: {
     data?: Record<string, any>;
     is_active?: boolean;
@@ -113,7 +108,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Delete employee
   deleteEmployee: async (id: number) => {
     const response = await fetch(`${BASE_URL}/api/employees/employees/${id}/`, {
       method: "DELETE",
@@ -128,7 +122,6 @@ export const EmployeesService = {
     return true;
   },
 
-  // Get employees by template
   getEmployeesByTemplate: async (templateId: number) => {
     const response = await fetch(
       `${BASE_URL}/api/employees/employees/by_template/?template_id=${templateId}`,
@@ -146,7 +139,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Search employees
   searchEmployees: async (query: string, templateId?: number) => {
     const queryParams = new URLSearchParams();
     queryParams.append("q", query);
@@ -168,7 +160,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Validate employee data
   validateEmployeeData: async (id: number) => {
     const response = await fetch(
       `${BASE_URL}/api/employees/employees/${id}/validate_data/`,
@@ -186,7 +177,6 @@ export const EmployeesService = {
     return response.json();
   },
 
-  // Bulk delete employees
   bulkDeleteEmployees: async (employeeIds: number[]) => {
     const response = await fetch(`${BASE_URL}/api/employees/employees/bulk_delete/`, {
       method: "DELETE",
